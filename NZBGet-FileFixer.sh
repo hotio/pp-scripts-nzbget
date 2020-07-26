@@ -51,18 +51,15 @@ if [[ ! -z $NZBPO_OWNER ]]; then
     fi
 fi
 
-OLDIFS=$IFS
-IFS=$'\n'
 # reset timestamps
 if [[ $NZBPO_TIMESTAMPS == "Reset" ]]; then
     echo "[INFO] Resetting timestamps for $NZBPP_NZBNAME"
-    touch "$(find "$NZBPP_DIRECTORY")"
+    find "$NZBPP_DIRECTORY" -type f -exec touch {} \;
     if [[ $? != 0 ]]; then
         echo "[ERROR] Resetting timestamps for $NZBPP_NZBNAME failed!"
         EXITCODE=94
     fi
 fi
-IFS=$OLDIFS
 
 # exit with received exitcode
 exit $EXITCODE
